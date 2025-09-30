@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4cafef;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #399ad6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Dynamic Form</h2>
+    
+    <label for="role">Select Role:</label>
+    <select id="role" onchange="updateForm()">
+      <option value="">-- Select --</option>
+      <option value="student">Student</option>
+      <option value="teacher">Teacher</option>
+    </select>
+
+    <div id="formFields">
+      <!-- Fields will appear here dynamically -->
+    </div>
+
+    <button type="submit">Submit</button>
+  </div>
+
+  <script>
+    function updateForm() {
+      let role = document.getElementById("role").value;
+      let formFields = document.getElementById("formFields");
+
+      formFields.innerHTML = ""; // Clear old fields
+
+      if (role === "student") {
+        formFields.innerHTML = `
+          <label for="name">Name:</label>
+          <input type="text" id="name" placeholder="Enter name">
+          
+          <label for="class">Class:</label>
+          <input type="text" id="class" placeholder="Enter class">
+          
+          <label for="roll">Roll No:</label>
+          <input type="text" id="roll" placeholder="Enter roll no">
+        `;
+      } 
+      else if (role === "teacher") {
+        formFields.innerHTML = `
+          <label for="name">Name:</label>
+          <input type="text" id="name" placeholder="Enter name">
+          
+          <label for="subject">Subject:</label>
+          <input type="text" id="subject" placeholder="Enter subject">
+          
+          <label for="exp">Experience (Years):</label>
+          <input type="number" id="exp" placeholder="Enter experience">
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

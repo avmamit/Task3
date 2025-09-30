@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: lightblue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4cafef;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #399ad6;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Dynamic Calculator</h2>
+    
+    <label for="operation">Choose Operation:</label>
+    <select id="operation" onchange="updateForm()">
+      <option value="">-- Select --</option>
+      <option value="add">Addition</option>
+      <option value="sub">Subtraction</option>
+      <option value="mul">Multiplication</option>
+      <option value="div">Division</option>
+      <option value="sqrt">Square Root</option>
+    </select>
+
+    <div id="inputs">
+      <!-- Input fields will appear here dynamically -->
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function updateForm() {
+      let operation = document.getElementById("operation").value;
+      let inputDiv = document.getElementById("inputs");
+      inputDiv.innerHTML = "";
+
+      if (operation === "sqrt") {
+        inputDiv.innerHTML = `
+          <label for="num1">Enter a Number:</label>
+          <input type="number" id="num1" placeholder="Enter number">
+        `;
+      } else if (operation) {
+        inputDiv.innerHTML = `
+          <label for="num1">Enter First Number:</label>
+          <input type="number" id="num1" placeholder="First number">
+          <label for="num2">Enter Second Number:</label>
+          <input type="number" id="num2" placeholder="Second number">
+        `;
+      }
+    }
+
+    function calculate() {
+      let operation = document.getElementById("operation").value;
+      let num1 = parseFloat(document.getElementById("num1")?.value);
+      let num2 = document.getElementById("num2") ? parseFloat(document.getElementById("num2").value) : null;
+      let result = "";
+
+      if (isNaN(num1)) {
+        result = "⚠️ Please enter valid number(s)!";
+      } else {
+        switch (operation) {
+          case "add":
+            result = num1 + num2;
+            break;
+          case "sub":
+            result = num1 - num2;
+            break;
+          case "mul":
+            result = num1 * num2;
+            break;
+          case "div":
+            result = num2 !== 0 ? (num1 / num2) : "❌ Cannot divide by zero!";
+            break;
+          case "sqrt":
+            result = num1 >= 0 ? Math.sqrt(num1) : "❌ Negative numbers not allowed!";
+            break;
+          default:
+            result = "⚠️ Please select an operation.";
+        }
+      }
+      document.getElementById("result").innerText = "Result: " + result;
+    }
+  </script>
+</body>
+</html>
